@@ -8,10 +8,29 @@ import {
   NavDropdown,
 } from "react-bootstrap";
 import { FaShoppingCart, FaBell, FaBars } from "react-icons/fa";
+import { jwtDecode } from "jwt-decode";
 
 const MyNavbar = () => {
+  const token = localStorage.getItem("token");
+  let role = null;
+
+  if (token) {
+    try {
+      const decodedToken = jwtDecode(token);
+      role = decodedToken.role;
+    } catch (error) {
+      console.error("Failed to decode token:", error);
+    }
+  }
+
+  role = role || "user";
   return (
-    <Navbar expand="lg" bg="light" variant="light" className="fixed-top">
+    <Navbar
+      expand="lg"
+      bg={role === "admin" ? "light" : "light"}
+      variant={role === "admin" ? "light" : "light"}
+      className="fixed-top"
+    >
       <Container fluid>
         <Navbar.Toggle aria-controls="navbarScroll">
           <FaBars />
@@ -26,9 +45,20 @@ const MyNavbar = () => {
         </Navbar.Brand>
         <Navbar.Collapse id="navbarScroll">
           <Nav className="me-auto">
-            <Nav.Link href="#">Dashboard</Nav.Link>
-            <Nav.Link href="#">Team</Nav.Link>
-            <Nav.Link href="#">Projects</Nav.Link>
+            {role === "admin" ? (
+              <>
+                <Nav.Link href="#">Admin Dashboard</Nav.Link>
+                <Nav.Link href="#">Manage Users</Nav.Link>
+                <Nav.Link href="#">Settings</Nav.Link>
+              </>
+            ) : (
+              <>
+                <Nav.Link href="#">User Dashboard</Nav.Link>
+                <Nav.Link href="#">Dashboard</Nav.Link>
+                <Nav.Link href="#">Team</Nav.Link>
+                <Nav.Link href="#">Projects</Nav.Link>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
         <div className="d-flex align-items-center">
@@ -43,8 +73,8 @@ const MyNavbar = () => {
               </Badge>
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item href="#">Some news</Dropdown.Item>
-              <Dropdown.Item href="#">Another news</Dropdown.Item>
+              <Dropdown.Item href="#">Notifications</Dropdown.Item>
+              <Dropdown.Item href="#">Another action</Dropdown.Item>
               <Dropdown.Item href="#">Something else here</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
