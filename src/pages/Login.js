@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [role, setRole] = useState("");
@@ -33,7 +34,7 @@ const Login = () => {
       setSuccess(success);
       console.log(success);
       localStorage.setItem("token", token);
-      toast.success("Logged in successfully");
+      toast.success("User successfully logged in");
       return success;
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -136,6 +137,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </section>
   );
 };
