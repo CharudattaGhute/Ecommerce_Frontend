@@ -52,7 +52,7 @@ const Login = () => {
     e.preventDefault();
     const loginSuccess = await login({ role, email, password });
     if (loginSuccess) {
-      navigate("/dashboard");
+      navigate("/navbar");
     }
   };
 
