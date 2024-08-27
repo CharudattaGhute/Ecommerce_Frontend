@@ -7,8 +7,12 @@ import {
   FaMoneyBill,
   FaCalendar,
   FaChartLine,
+  FaUser,
+  FaEnvelope,
+  FaUserTag,
+  FaTimes,
+  FaBars,
 } from "react-icons/fa";
-import MyNavbar from "../component/Navbar";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
@@ -38,6 +42,15 @@ const Dashboard = () => {
     if (user.role === "admin") {
       return (
         <>
+          <div className="container mb-4">
+            <FaUserTag className="me-3" /> {user.role}
+          </div>
+          <div className="container mb-4">
+            <FaEnvelope className="me-3" /> {user.email}
+          </div>
+          <div className="container mb-4">
+            <FaUser className="me-3" /> {user.username}
+          </div>
           <ListGroup.Item action href="#">
             <FaTachometerAlt className="me-3" /> Admin Dashboard
           </ListGroup.Item>
@@ -52,9 +65,14 @@ const Dashboard = () => {
     } else {
       return (
         <>
-          <div className="container">
-            <label>Username:-</label>
-            <h6>{user.email}</h6>
+          <div className="container mb-4">
+            <FaUserTag className="me-3" /> {user.role}
+          </div>
+          <div className="container mb-4">
+            <FaEnvelope className="me-3" /> {user.email}
+          </div>
+          <div className="container mb-4">
+            <FaUser className="me-3" /> {user.username}
           </div>
           <ListGroup.Item action href="#">
             <FaTachometerAlt className="me-3" /> User Dashboard
@@ -75,44 +93,52 @@ const Dashboard = () => {
   };
 
   return (
-    <>
-      <MyNavbar onToggleSidebar={handleSidebarToggle} />
-      <div className="d-flex">
-        <div
-          className={`bg-light ${
-            sidebarOpen ? "sidebar-open" : "sidebar-closed"
-          } p-3`}
-          style={{
-            minHeight: "100vh",
-            width: "250px",
-            transition: "width 0.3s",
-          }}
-        >
+    <div className="d-flex">
+      <div
+        className={`bg-light position-relative ${
+          sidebarOpen ? "sidebar-open" : "sidebar-closed"
+        } p-3`}
+        style={{
+          minHeight: "100vh",
+          width: sidebarOpen ? "250px" : "60px",
+          transition: "width 0.3s",
+          overflowX: "hidden",
+        }}
+      >
+        {sidebarOpen && (
           <button
             onClick={handleSidebarToggle}
-            className="btn btn-primary mb-3"
+            className="btn btn-light position-absolute top-0 end-0 mt-3 me-3"
+            style={{ zIndex: 1 }}
           >
-            {sidebarOpen ? "Close Sidebar" : "Open Sidebar"}
+            <FaTimes />
           </button>
+        )}
+        {!sidebarOpen && (
+          <button
+            onClick={handleSidebarToggle}
+            className="btn btn-light position-absolute top-0 start-0 mt-3 ms-3"
+            style={{ zIndex: 1 }}
+          >
+            <FaBars />
+          </button>
+        )}
+        {sidebarOpen && (
           <ListGroup variant="flush">{renderSidebarItems()}</ListGroup>
-        </div>
-        <div
-          className="flex-grow-1"
-          style={{
-            marginLeft: sidebarOpen ? "250px" : "0",
-            transition: "margin-left 0.3s",
-          }}
-        >
-          <div className="container mt-5">
-            <h2>Welcome to the Dashboard</h2>
-            <p>This is a protected page accessible only to logged-in users.</p>
-            <h3>{user.name}</h3>
-            <h4>{user.email}</h4>
-            <h4>{user.role}</h4>
-          </div>
+        )}
+      </div>
+      <div
+        className="flex-grow-1"
+        style={{
+          marginLeft: sidebarOpen ? "250px" : "60px",
+          transition: "margin-left 0.3s",
+        }}
+      >
+        <div className="container mt-5">
+          <h2>Welcome to the Dashboard</h2>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
