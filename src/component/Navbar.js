@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Navbar,
   Nav,
@@ -9,21 +9,30 @@ import {
 } from "react-bootstrap";
 import { FaShoppingCart, FaBell, FaBars } from "react-icons/fa";
 import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
-const MyNavbar = () => {
-  const token = localStorage.getItem("token");
-  let role = null;
+const MyNavbar = ({ onToggleSidebar }) => {
+  const [role, setRole] = useState("user");
+  const navigate = useNavigate();
 
-  if (token) {
-    try {
-      const decodedToken = jwtDecode(token);
-      role = decodedToken.role;
-    } catch (error) {
-      console.error("Failed to decode token:", error);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        setRole(decodedToken.role);
+      } catch (error) {
+        console.error("Failed to decode token:", error);
+        setRole("user");
+      }
     }
-  }
+  }, []);
 
-  role = role || "user";
+  const handleLogoClick = () => {
+    navigate("/dashboard");
+  };
+
   return (
     <Navbar
       expand="lg"
@@ -33,9 +42,9 @@ const MyNavbar = () => {
     >
       <Container fluid>
         <Navbar.Toggle aria-controls="navbarScroll">
-          <FaBars />
+          <FaBars onClick={onToggleSidebar} />
         </Navbar.Toggle>
-        <Navbar.Brand href="#">
+        <Navbar.Brand href="#" onClick={handleLogoClick}>
           <img
             src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
             height="15"
@@ -57,6 +66,9 @@ const MyNavbar = () => {
                 <Nav.Link href="#">Dashboard</Nav.Link>
                 <Nav.Link href="#">Team</Nav.Link>
                 <Nav.Link href="#">Projects</Nav.Link>
+                <div>
+                  <button className="btn btn-primary">Logout</button>
+                </div>
               </>
             )}
           </Nav>
