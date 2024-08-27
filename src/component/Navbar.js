@@ -38,7 +38,6 @@ const MyNavbar = ({ onToggleSidebar }) => {
       expand="lg"
       bg={role === "admin" ? "light" : "light"}
       variant={role === "admin" ? "light" : "light"}
-      className="fixed-top"
     >
       <Container fluid>
         <Navbar.Toggle aria-controls="navbarScroll">
