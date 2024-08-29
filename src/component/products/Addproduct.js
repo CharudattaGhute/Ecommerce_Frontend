@@ -2,52 +2,46 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 
-function Addproduct() {
+function AddProduct() {
   const [productname, setProductname] = useState("");
   const [image, setImage] = useState(null);
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
-  const [available, setAvailable] = useState(true);
+  const [available, setAvailable] = useState("true");
   const [quantity, setQuantity] = useState("");
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(null);
-
-  const productnamechange = (e) => {
-    setProductname(e.target.value);
-  };
-  const categorychange = (e) => {
-    setCategory(e.target.value);
-  };
-  const pricechange = (e) => {
-    setPrice(e.target.value);
-  };
-  const quantitychnage = (e) => {
-    setAvailable(e.target.value);
-  };
+  const [success, setSuccess] = useState("");
 
   useEffect(() => {
     const fetchCategories = async () => {
       const token = localStorage.getItem("token");
+      if (!token) {
+        setError("No token found.");
+        return;
+      }
+
       try {
         const response = await axios.get(
           "http://localhost:5001/api/category/getcategory",
           {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           }
         );
-        console.log(response.data);
-        if (response.data && response.data.categories) {
-          setCategories(response.data.categories);
+        console.log("res data", response.data);
+        if (response.data && response.data.category) {
+          setCategories(response.data.category);
         } else {
-          console.error("Unexpected API response:", response.data);
-          setError("Error: Unexpected response format.");
+          setError("No categories found.");
         }
       } catch (err) {
-        console.error("Error fetching categories:", err);
-        setError("Error fetching categories");
+        console.error(
+          "Error fetching categories:",
+          err.response ? err.response.data : err.message
+        );
+        setError(
+          "Error fetching categories. Please check the console for more details."
+        );
       }
     };
 
@@ -57,14 +51,12 @@ function Addproduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-
     if (!token) {
       setError("User is not authenticated.");
       return;
     }
 
     const formData = new FormData();
-    console.log(formData);
     formData.append("productname", productname);
     formData.append("image", image);
     formData.append("category", category);
@@ -79,24 +71,21 @@ function Addproduct() {
           "Content-Type": "multipart/form-data",
         },
       });
-
       setSuccess("Product added successfully!");
       setProductname("");
       setImage(null);
       setCategory("");
       setPrice("");
-      setAvailable(true);
+      setAvailable("true");
       setQuantity("");
-      setError(null);
+      setError("");
     } catch (err) {
+      console.error(
+        "Error adding product:",
+        err.response ? err.response.data : err.message
+      );
       setError("Error adding product. Please try again.");
-      setSuccess(null);
     }
-  };
-
-  const handleDismiss = () => {
-    setError(null);
-    setSuccess(null);
   };
 
   return (
@@ -108,7 +97,7 @@ function Addproduct() {
           <Form.Control
             type="text"
             value={productname}
-            onChange={productnamechange}
+            onChange={(e) => setProductname(e.target.value)}
             required
           />
         </Form.Group>
@@ -126,19 +115,15 @@ function Addproduct() {
           <Form.Control
             as="select"
             value={category}
-            onChange={categorychange}
+            onChange={(e) => setCategory(e.target.value)}
             required
           >
             <option value="">Select a category</option>
-            {categories.length > 0 ? (
-              categories.map((cat) => (
-                <option key={cat._id} value={cat._id}>
-                  {cat.categoryname}
-                </option>
-              ))
-            ) : (
-              <option disabled>No categories available</option>
-            )}
+            {categories.map((cat) => (
+              <option key={cat._id} value={cat._id}>
+                {cat.categoryname}
+              </option>
+            ))}
           </Form.Control>
         </Form.Group>
 
@@ -147,7 +132,7 @@ function Addproduct() {
           <Form.Control
             type="number"
             value={price}
-            onChange={pricechange}
+            onChange={(e) => setPrice(e.target.value)}
             required
           />
         </Form.Group>
@@ -157,7 +142,7 @@ function Addproduct() {
           <Form.Control
             as="select"
             value={available}
-            onChange={(e) => setAvailable(e.target.value === "true")}
+            onChange={(e) => setAvailable(e.target.value)}
             required
           >
             <option value="true">Yes</option>
@@ -170,22 +155,13 @@ function Addproduct() {
           <Form.Control
             type="number"
             value={quantity}
-            onChange={quantitychnage}
+            onChange={(e) => setQuantity(e.target.value)}
             required
           />
         </Form.Group>
 
-        {error && (
-          <Alert variant="danger" dismissible onClose={handleDismiss}>
-            {error}
-          </Alert>
-        )}
-
-        {success && (
-          <Alert variant="success" dismissible onClose={handleDismiss}>
-            {success}
-          </Alert>
-        )}
+        {error && <Alert variant="danger">{error}</Alert>}
+        {success && <Alert variant="success">{success}</Alert>}
 
         <Button variant="primary" type="submit" className="mt-3">
           Add Product
@@ -195,4 +171,4 @@ function Addproduct() {
   );
 }
 
-export default Addproduct;
+export default AddProduct;
