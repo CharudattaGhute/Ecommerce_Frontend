@@ -10,9 +10,11 @@ import {
 import { FaShoppingCart, FaBell, FaBars } from "react-icons/fa";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
 const MyNavbar = ({ onToggleSidebar }) => {
   const [role, setRole] = useState("user");
+  const [user, setUser] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,10 +29,15 @@ const MyNavbar = ({ onToggleSidebar }) => {
         setRole("user");
       }
     }
-  }, []);
+  }, [localStorage.getItem("token")]);
 
   const handleLogoClick = () => {
     navigate("/dashboard");
+  };
+  const logout = () => {
+    navigate("/login");
+    localStorage.removeItem("token");
+    setUser(null);
   };
 
   return (
@@ -45,8 +52,8 @@ const MyNavbar = ({ onToggleSidebar }) => {
         </Navbar.Toggle>
         <Navbar.Brand href="#" onClick={handleLogoClick}>
           <img
-            src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
-            height="15"
+            src="https://c4.wallpaperflare.com/wallpaper/185/41/185/smoke-gas-letter-litera-wallpaper-preview.jpg"
+            height="40"
             alt="MDB Logo"
             loading="lazy"
           />
@@ -65,13 +72,14 @@ const MyNavbar = ({ onToggleSidebar }) => {
                 <Nav.Link href="#">Dashboard</Nav.Link>
                 <Nav.Link href="#">Team</Nav.Link>
                 <Nav.Link href="#">Projects</Nav.Link>
-                <div>
-                  <button className="btn btn-primary">Logout</button>
-                </div>
               </>
             )}
           </Nav>
+          <Button variant="outline-success" onClick={logout}>
+            LOGOUT
+          </Button>
         </Navbar.Collapse>
+
         <div className="d-flex align-items-center">
           <Nav.Link href="#">
             <FaShoppingCart className="text-reset me-3" />
@@ -104,7 +112,7 @@ const MyNavbar = ({ onToggleSidebar }) => {
           >
             <NavDropdown.Item href="#">My profile</NavDropdown.Item>
             <NavDropdown.Item href="#">Settings</NavDropdown.Item>
-            <NavDropdown.Item href="#">Logout</NavDropdown.Item>
+            <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
           </NavDropdown>
         </div>
       </Container>
