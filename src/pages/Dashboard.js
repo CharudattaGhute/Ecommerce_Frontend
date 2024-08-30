@@ -6,6 +6,7 @@ import { FaUser, FaEnvelope, FaUserTag, FaTimes, FaBars } from "react-icons/fa";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import Addcategory from "../component/category/Addcategory";
 import Addproduct from "../component/products/Addproduct";
+import Cart from "../component/cart/Cart";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
@@ -78,11 +79,6 @@ const Dashboard = () => {
   const handleSidebarToggle = () => {
     setSidebarOpen(!sidebarOpen);
   };
-  const logout = () => {
-    navigate("/login");
-    localStorage.removeItem("token");
-    setUser(null);
-  };
 
   return (
     <Container fluid className="d-flex p-0">
@@ -133,7 +129,7 @@ const Dashboard = () => {
           <Routes>
             <Route path="Products" element={<h1>Products</h1>} />
             <Route path="Category" element={<h1>Category</h1>} />
-            <Route path="cart" element={<h1>Cart</h1>} />
+            <Route path="cart" element={<Cart />} />
             <Route path="addproduts" element={<Addproduct />} />
             <Route path="addcategory" element={<Addcategory />} />
             <Route
