@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
+import Productdetails from "./Productdetails";
 
 function Cart() {
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -27,10 +30,24 @@ function Cart() {
     getProducts();
   }, []);
 
+  const handleCardClick = (product) => {
+    setSelectedProduct(product);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedProduct(null);
+  };
+
   return (
     <div className="container mt-5 d-flex flex-wrap justify-content-around">
       {products.map((product) => (
-        <Card key={product._id} style={{ width: "18rem", margin: "10px" }}>
+        <Card
+          key={product._id}
+          style={{ width: "18rem", margin: "10px" }}
+          onClick={() => handleCardClick(product)}
+        >
           <Card.Img
             variant="top"
             src={
@@ -43,11 +60,26 @@ function Cart() {
           <Card.Body>
             <Card.Title>{product.productname}</Card.Title>
             <Card.Text>{product.description}</Card.Text>
-            <Card.Text>Quantity: {product.quantity}</Card.Text>
-            <Button variant="primary">${product.price}</Button>
+            <Card.Text>
+              <span style={{ color: "blue" }}>Quantity:</span>{" "}
+              {product.quantity}
+            </Card.Text>
+            <Card.Text>
+              <span style={{ color: "blue" }}>Availability:</span>
+              {product.availability}
+            </Card.Text>
+            <Button variant="outline-danger">${product.price}</Button>
           </Card.Body>
         </Card>
       ))}
+
+      {selectedProduct && (
+        <Productdetails
+          show={showModal}
+          onHide={handleCloseModal}
+          product={selectedProduct}
+        />
+      )}
     </div>
   );
 }
