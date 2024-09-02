@@ -56,7 +56,6 @@ function AddProduct() {
       setError("User is not authenticated.");
       return;
     }
-
     const formData = new FormData();
     formData.append("productname", productname);
     formData.append("image", image);
@@ -65,7 +64,6 @@ function AddProduct() {
     formData.append("available", available);
     formData.append("quantity", quantity);
     formData.append("description", description);
-
     try {
       await axios.post("http://localhost:5001/api/createproduct", formData, {
         headers: {
@@ -86,7 +84,7 @@ function AddProduct() {
       console.error(
         "Error adding product:",
         err.response ? err.response.data : err.message
-      );
+      );s
       setError("Error adding product. Please try again.");
     }
   };
