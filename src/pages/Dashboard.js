@@ -2,16 +2,26 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import { FaUser, FaEnvelope, FaUserTag, FaTimes, FaBars } from "react-icons/fa";
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import {
+  FaUser,
+  FaEnvelope,
+  FaUserTag,
+  FaTimes,
+  FaBars,
+  FaBoxOpen,
+  FaCartPlus,
+  FaPlusCircle,
+  FaTags,
+} from "react-icons/fa";
+import { Routes, Route, Link } from "react-router-dom";
 import Addcategory from "../component/category/Addcategory";
 import Addproduct from "../component/products/Addproduct";
 import Cart from "../component/cart/Cart";
+import Cartshow from "../component/user/Carthshow";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     async function getUserInfo() {
@@ -46,30 +56,60 @@ const Dashboard = () => {
         </div>
         <hr />
         <div className="container">
-          <ul>
-            <Link to={"Products"}>
-              <Button variant="outline-success">Products</Button>
-            </Link>
-            <hr></hr>
-            {user.role === "admin" && (
+          <ul className="list-unstyled">
+            <li className="mb-3">
+              <Link to={"Products"}>
+                <Button variant="outline-success" className="w-100">
+                  <FaBoxOpen className="me-2" />
+                  Products
+                </Button>
+              </Link>
+            </li>
+            {user.role === "admin" ? (
               <>
-                <Link to={"addproduts"}>
-                  <Button variant="outline-success">Add Products</Button>
-                </Link>
-                <hr></hr>
-                <Link to={"addcategory"}>
-                  <Button variant="outline-success">Add Category</Button>
-                </Link>
-                <hr></hr>
+                <li className="mb-3">
+                  <Link to={"addproduts"}>
+                    <Button variant="outline-success" className="w-100">
+                      <FaPlusCircle className="me-2" />
+                      Add Products
+                    </Button>
+                  </Link>
+                </li>
+                <li className="mb-3">
+                  <Link to={"addcategory"}>
+                    <Button variant="outline-success" className="w-100">
+                      <FaTags className="me-2" />
+                      Add Category
+                    </Button>
+                  </Link>
+                </li>
+                <li className="mb-3">
+                  <Link to={"cart"}>
+                    <Button variant="outline-success" className="w-100">
+                      <FaCartPlus className="me-2" />
+                      Cart
+                    </Button>
+                  </Link>
+                </li>
               </>
+            ) : (
+              <li className="mb-3">
+                <Link to={"userproducts"}>
+                  <Button variant="outline-success" className="w-100">
+                    <FaCartPlus className="me-2" />
+                    Product Cart
+                  </Button>
+                </Link>
+              </li>
             )}
-            <Link to={"Category"}>
-              <Button variant="outline-success">Category</Button>
-            </Link>
-            <hr></hr>
-            <Link to={"cart"}>
-              <Button variant="outline-success">Cart</Button>
-            </Link>
+            <li>
+              <Link to={"Category"}>
+                <Button variant="outline-success" className="w-100">
+                  <FaTags className="me-2" />
+                  Category
+                </Button>
+              </Link>
+            </li>
           </ul>
         </div>
       </>
@@ -95,13 +135,18 @@ const Dashboard = () => {
             transition: "width 0.3s",
             overflowX: "hidden",
             position: "relative",
+            boxShadow: "2px 0 5px rgba(0, 0, 0, 0.1)",
           }}
         >
           {sidebarOpen && (
             <button
               onClick={handleSidebarToggle}
               className="btn btn-light position-absolute top-0 end-0 mt-3 me-3"
-              style={{ zIndex: 1 }}
+              style={{
+                zIndex: 1,
+                padding: "8px 12px",
+                fontSize: "1.2rem",
+              }}
             >
               <FaTimes />
             </button>
@@ -110,7 +155,11 @@ const Dashboard = () => {
             <button
               onClick={handleSidebarToggle}
               className="btn btn-light position-absolute top-0 start-0 mt-3 ms-3"
-              style={{ zIndex: 1 }}
+              style={{
+                zIndex: 1,
+                padding: "8px 12px",
+                fontSize: "1.2rem",
+              }}
             >
               <FaBars />
             </button>
@@ -124,18 +173,28 @@ const Dashboard = () => {
           style={{
             marginLeft: sidebarOpen ? "250px" : "15px",
             transition: "margin-left 0.3s",
+            padding: "20px",
           }}
         >
           <Routes>
-            <Route path="Products" element={<h1>Products</h1>} />
+            <Route path="Products" element={<Cart />} />
             <Route path="Category" element={<h1>Category</h1>} />
-            <Route path="cart" element={<Cart />} />
-            <Route path="addproduts" element={<Addproduct />} />
-            <Route path="addcategory" element={<Addcategory />} />
+            <Route path="userproducts" element={<Cartshow />} />
+
+            {user.role === "admin" ? (
+              <>
+                <Route path="addproduts" element={<Addproduct />} />
+                <Route path="addcategory" element={<Addcategory />} />
+                <Route path="cart" element={<h1>Cart</h1>} />
+              </>
+            ) : (
+              <Route path="cart" element={<Cart />} />
+            )}
+
             <Route
               path="/"
               element={
-                <h1 style={{ marginRight: "500px" }}>Welcome to Dashboard</h1>
+                <h1 style={{ textAlign: "center" }}>Welcome to Dashboard</h1>
               }
             />
           </Routes>
