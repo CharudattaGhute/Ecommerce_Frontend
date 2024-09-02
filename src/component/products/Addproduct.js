@@ -12,6 +12,7 @@ function AddProduct() {
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [description, setDescription] = useState("");
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -63,6 +64,7 @@ function AddProduct() {
     formData.append("price", price);
     formData.append("available", available);
     formData.append("quantity", quantity);
+    formData.append("description", description);
 
     try {
       await axios.post("http://localhost:5001/api/createproduct", formData, {
@@ -74,6 +76,7 @@ function AddProduct() {
       setSuccess("Product added successfully!");
       setProductname("");
       setImage(null);
+      setDescription("");
       setCategory("");
       setPrice("");
       setAvailable("true");
@@ -107,6 +110,16 @@ function AddProduct() {
           <Form.Control
             type="file"
             onChange={(e) => setImage(e.target.files[0])}
+          />
+        </Form.Group>
+        <Form.Group controlId="productDescription">
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
           />
         </Form.Group>
 
