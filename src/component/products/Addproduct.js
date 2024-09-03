@@ -84,7 +84,7 @@ function AddProduct() {
       console.error(
         "Error adding product:",
         err.response ? err.response.data : err.message
-      );s
+      );
       setError("Error adding product. Please try again.");
     }
   };
