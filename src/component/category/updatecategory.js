@@ -118,14 +118,21 @@ function UpdateCategory() {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Actions</th>
+            <th>CategoryName</th>
+            <th>Created At</th>
+            <th>
+              <td>Update</td>
+            </th>
+            <th>
+              <td>Delete</td>
+            </th>
           </tr>
         </thead>
         <tbody>
           {categories.map((category) => (
             <tr key={category._id}>
               <td>{category.categoryname}</td>
+              <td>{new Date(category.createdAt).toLocaleDateString()}</td>
               <td>
                 <FaEdit
                   style={{
@@ -135,6 +142,8 @@ function UpdateCategory() {
                   }}
                   onClick={() => handleUpdateClick(category)}
                 />
+              </td>
+              <td>
                 <FaTrash
                   style={{ cursor: "pointer", color: "red" }}
                   onClick={() => handleDeleteClick(category._id)}
