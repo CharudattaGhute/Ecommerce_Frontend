@@ -25,7 +25,8 @@ function Cart() {
         const productsWithCategoryNames = await Promise.all(
           response.data.map(async (product) => {
             console.log("Product:", product);
-            if (product.category._id) {
+
+            if (product.category && product.category._id) {
               try {
                 const categoryResponse = await axios.get(
                   `http://localhost:5001/api/category/getcategorybyid/${product.category._id}`,
@@ -52,7 +53,7 @@ function Cart() {
             }
             return {
               ...product,
-              category: "No Category ID",
+              category: "No Category",
             };
           })
         );
