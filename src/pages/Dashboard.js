@@ -102,14 +102,24 @@ const Dashboard = () => {
                 </li>
               </>
             ) : (
-              <li className="mb-3">
-                <Link to={"userproducts"}>
-                  <Button variant="outline-success" className="w-100">
-                    <FaCartPlus className="me-2" />
-                    Product Cart
-                  </Button>
-                </Link>
-              </li>
+              <>
+                <li className="mb-3">
+                  <Link to={"userproducts"}>
+                    <Button variant="outline-success" className="w-100">
+                      <FaCartPlus className="me-2" />
+                      Product Cart
+                    </Button>
+                  </Link>
+                </li>
+                <li className="mb-3">
+                  <Link to={"cart"}>
+                    <Button variant="outline-success" className="w-100">
+                      <FaCartPlus className="me-2" />
+                      Cart
+                    </Button>
+                  </Link>
+                </li>
+              </>
             )}
           </ul>
         </div>
@@ -189,7 +199,7 @@ const Dashboard = () => {
                 <Route path="cart" element={<h1>Cart</h1>} />
               </>
             ) : (
-              <Route path="cart" element={<Cart />} />
+              <Route path="cart" element={<h1>Cart</h1>} />
             )}
 
             <Route
