@@ -18,6 +18,7 @@ import Addcategory from "../component/category/Addcategory";
 import Addproduct from "../component/products/Addproduct";
 import Cart from "../component/cart/Cart";
 import Cartshow from "../component/user/Carthshow";
+import UpdateCategory from "../component/category/updatecategory";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
@@ -91,6 +92,14 @@ const Dashboard = () => {
                     </Button>
                   </Link>
                 </li>
+                <li>
+                  <Link to={"Category"}>
+                    <Button variant="outline-success" className="w-100">
+                      <FaTags className="me-2" />
+                      Category
+                    </Button>
+                  </Link>
+                </li>
               </>
             ) : (
               <li className="mb-3">
@@ -102,14 +111,6 @@ const Dashboard = () => {
                 </Link>
               </li>
             )}
-            <li>
-              <Link to={"Category"}>
-                <Button variant="outline-success" className="w-100">
-                  <FaTags className="me-2" />
-                  Category
-                </Button>
-              </Link>
-            </li>
           </ul>
         </div>
       </>
@@ -178,7 +179,7 @@ const Dashboard = () => {
         >
           <Routes>
             <Route path="Products" element={<Cart />} />
-            <Route path="Category" element={<h1>Category</h1>} />
+            <Route path="Category" element={<UpdateCategory />} />
             <Route path="userproducts" element={<Cartshow />} />
 
             {user.role === "admin" ? (
