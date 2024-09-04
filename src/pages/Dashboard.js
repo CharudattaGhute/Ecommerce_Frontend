@@ -19,6 +19,7 @@ import Addproduct from "../component/products/Addproduct";
 import Cart from "../component/cart/Cart";
 import Cartshow from "../component/user/Carthshow";
 import UpdateCategory from "../component/category/updatecategory";
+import Productmodify from "../component/products/Productmodify";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
@@ -182,13 +183,13 @@ const Dashboard = () => {
         <Col
           className="flex-grow-1"
           style={{
-            marginLeft: sidebarOpen ? "250px" : "15px",
+            marginLeft: sidebarOpen ? "100px" : "15px",
             transition: "margin-left 0.3s",
             padding: "20px",
           }}
         >
           <Routes>
-            <Route path="Products" element={<Cart />} />
+            <Route path="Products" element={<Productmodify />} />
             <Route path="Category" element={<UpdateCategory />} />
             <Route path="userproducts" element={<Cartshow />} />
 
