@@ -133,7 +133,7 @@ function ProductModify() {
               <td>{new Date(product.updatedAt).toLocaleDateString()}</td>
               <td>{product.quantity}</td>
               <td>{product.price}</td>
-              <td>{product.availability ? "InStock" : "OutOfStock"}</td>
+              <td>{product.available ? "InStock" : "OutOfStock"}</td>
               <td>
                 <FaEdit
                   style={{
@@ -201,8 +201,8 @@ function ProductModify() {
               <Form.Label>Available</Form.Label>
               <Form.Check
                 type="checkbox"
-                name="availability"
-                checked={selectedProduct?.availability || false}
+                name="available"
+                checked={selectedProduct?.available || false}
                 onChange={handleChange}
               />
             </Form.Group>
