@@ -5,16 +5,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
-  const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
-  const handlerole = (e) => {
-    setRole(e.target.value);
-  };
   const handleemail = (e) => {
     setEmail(e.target.value);
   };
@@ -50,7 +46,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const loginSuccess = await login({ role, email, password });
+    const loginSuccess = await login({ email, password });
     if (loginSuccess) {
       navigate("/dashboard");
     }
@@ -69,24 +65,6 @@ const Login = () => {
                 <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Login</h3>
 
                 <form className="px-md-2" onSubmit={handleSubmit}>
-                  <div className="mb-4">
-                    <label className="form-label" htmlFor="role">
-                      ROLE
-                    </label>
-                    <select
-                      className="form-select"
-                      id="role"
-                      value={role}
-                      onChange={handlerole}
-                    >
-                      <option value="" disabled>
-                        Select Role
-                      </option>
-                      <option value="user">User</option>
-                      <option value="admin">Admin</option>
-                    </select>
-                  </div>
-
                   <div className="form-outline mb-4">
                     <label className="form-label" htmlFor="email">
                       EMAIL
