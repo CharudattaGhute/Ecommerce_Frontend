@@ -112,7 +112,8 @@ function ProductModify() {
 
   return (
     <div>
-      <h1>Products</h1>
+      <h1 style={{ textAlign: "center", fontFamily: "unset" }}>Products</h1>
+      <hr />
       {error && <p style={{ color: "red" }}>{error}</p>}
       <Table striped bordered hover>
         <thead>
