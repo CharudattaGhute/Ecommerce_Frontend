@@ -113,18 +113,19 @@ function UpdateCategory() {
 
   return (
     <div>
-      <h1>Categories</h1>
+      <h1 style={{ textAlign: "center", fontFamily: "unset" }}>Categories</h1>
+      <hr />
       {error && <p style={{ color: "red" }}>{error}</p>}
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>CategoryName</th>
-            <th>Created At</th>
+            <th style={{ color: "blue" }}>CategoryName</th>
+            <th style={{ color: "blue" }}>Created At</th>
             <th>
-              <td>Update</td>
+              <td style={{ color: "blue" }}>Update</td>
             </th>
             <th>
-              <td>Delete</td>
+              <td style={{ color: "blue" }}>Delete</td>
             </th>
           </tr>
         </thead>
