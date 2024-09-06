@@ -91,7 +91,8 @@ function AddProduct() {
 
   return (
     <Container>
-      <h2>Add Product</h2>
+      <h1 style={{ textAlign: "center", fontFamily: "unset" }}>Add Product</h1>
+      <hr />
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="productName">
           <Form.Label>Product Name</Form.Label>
