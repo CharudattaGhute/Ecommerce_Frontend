@@ -47,10 +47,11 @@ const AddCategory = () => {
 
   return (
     <Container>
-      <h2>Add Category</h2>
+      <h1 style={{ textAlign: "center", fontFamily: "unset" }}>Add Category</h1>
+      <hr />
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="categoryName">
-          <Form.Label>Category Name</Form.Label>
+          <h3 style={{ color: "blue" }}>Category Name</h3>
           <Form.Control
             type="text"
             value={categoryname}
