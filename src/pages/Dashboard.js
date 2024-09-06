@@ -20,7 +20,7 @@ import Cart from "../component/cart/Cart";
 import Cartshow from "../component/user/Carthshow";
 import UpdateCategory from "../component/category/updatecategory";
 import Productmodify from "../component/products/Productmodify";
-
+import Home from "../component/Home";
 const Dashboard = () => {
   const [user, setUser] = useState({});
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -59,18 +59,18 @@ const Dashboard = () => {
         <hr />
         <div className="container">
           <ul className="list-unstyled">
-            <li className="mb-3">
-              <Link to={"Products"}>
-                <Button variant="outline-success" className="w-100">
-                  <FaBoxOpen className="me-2" />
-                  Products
-                </Button>
-              </Link>
-            </li>
             {user.role === "admin" ? (
               <>
                 <li className="mb-3">
-                  <Link to={"addproduts"}>
+                  <Link to={"Products"}>
+                    <Button variant="outline-success" className="w-100">
+                      <FaBoxOpen className="me-2" />
+                      Products
+                    </Button>
+                  </Link>
+                </li>
+                <li className="mb-3">
+                  <Link to={"addproducts"}>
                     <Button variant="outline-success" className="w-100">
                       <FaPlusCircle className="me-2" />
                       Add Products
@@ -86,18 +86,10 @@ const Dashboard = () => {
                   </Link>
                 </li>
                 <li className="mb-3">
-                  <Link to={"cart"}>
-                    <Button variant="outline-success" className="w-100">
-                      <FaCartPlus className="me-2" />
-                      Cart
-                    </Button>
-                  </Link>
-                </li>
-                <li>
                   <Link to={"Category"}>
                     <Button variant="outline-success" className="w-100">
                       <FaTags className="me-2" />
-                      Category
+                      Manage Category
                     </Button>
                   </Link>
                 </li>
@@ -117,6 +109,14 @@ const Dashboard = () => {
                     <Button variant="outline-success" className="w-100">
                       <FaCartPlus className="me-2" />
                       Cart
+                    </Button>
+                  </Link>
+                </li>
+                <li className="mb-3">
+                  <Link to={"category"}>
+                    <Button variant="outline-success" className="w-100">
+                      <FaTags className="me-2" />
+                      Category
                     </Button>
                   </Link>
                 </li>
@@ -189,26 +189,24 @@ const Dashboard = () => {
           }}
         >
           <Routes>
-            <Route path="Products" element={<Productmodify />} />
-            <Route path="Category" element={<UpdateCategory />} />
-            <Route path="userproducts" element={<Cartshow />} />
-
-            {user.role === "admin" ? (
+            {/* Admin Routes */}
+            {user.role === "admin" && (
               <>
-                <Route path="addproduts" element={<Addproduct />} />
+                <Route path="Products" element={<Productmodify />} />
+                <Route path="addproducts" element={<Addproduct />} />
                 <Route path="addcategory" element={<Addcategory />} />
-                <Route path="cart" element={<h1>Cart</h1>} />
+                <Route path="Category" element={<UpdateCategory />} />
               </>
-            ) : (
-              <Route path="cart" element={<h1>Cart</h1>} />
             )}
-
-            <Route
-              path="/"
-              element={
-                <h1 style={{ textAlign: "center" }}>Welcome to Dashboard</h1>
-              }
-            />
+            {/* User Routes */}
+            {user.role !== "admin" && (
+              <>
+                <Route path="userproducts" element={<Cartshow />} />
+                <Route path="cart" element={<h1>Cart</h1>} />
+                <Route path="category" element={<h1>Category</h1>} />
+              </>
+            )}
+            <Route path="/" element={<Home />} />
           </Routes>
         </Col>
       </Row>
