@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
 import Productdetails from "../cart/Productdetails";
+import "./Cart.css";
 
 function Cart() {
   const [products, setProducts] = useState([]);
@@ -77,6 +78,12 @@ function Cart() {
     setSelectedProduct(null);
   };
 
+  const handleAddToCart = (product) => {
+    // Logic to add product to cart
+    console.log("Add to Cart:", product);
+    // You can add your own implementation here
+  };
+
   return (
     <div className="container mt-5 d-flex flex-wrap justify-content-around">
       {products.map((product) => (
@@ -84,32 +91,54 @@ function Cart() {
           key={product._id}
           style={{ width: "18rem", margin: "10px" }}
           onClick={() => handleCardClick(product)}
+          className="custom-card"
         >
-          <Card.Img
-            variant="top"
-            src={
-              product.image
-                ? product.image
-                : "http://localhost:5001/uploads/default-image.jpg"
-            }
-            alt={product.productname}
-          />
-          <Card.Body>
-            <Card.Title>{product.productname}</Card.Title>
-            <Card.Text>{product.description}</Card.Text>
-            <Card.Text>
-              <span style={{ color: "blue" }}>Quantity:</span>{" "}
-              {product.quantity}
+          <div className="image-container">
+            <Card.Img
+              variant="top"
+              src={
+                product.image
+                  ? product.image
+                  : "http://localhost:5001/uploads/default-image.jpg"
+              }
+              alt={product.productname}
+            />
+          </div>
+          <Card.Body className="custom-card-body">
+            <Card.Title className="product-title">
+              {product.productname}
+            </Card.Title>
+            <Card.Text className="product-description">
+              {product.description}
             </Card.Text>
-            <Card.Text>
-              <span style={{ color: "blue" }}>Availability:</span>
-              {product.availability}
-            </Card.Text>
-            <Card.Text>
-              <span style={{ color: "blue" }}>Categories:</span>
-              {product.category}
-            </Card.Text>
-            <Button variant="outline-danger">${product.price}</Button>
+            <div className="product-details">
+              <Card.Text className="product-info">
+                <span className="info-label">Quantity:</span> {product.quantity}
+              </Card.Text>
+              <Card.Text className="product-info">
+                <span className="info-label">Availability:</span>{" "}
+                {product.availability}
+              </Card.Text>
+              <Card.Text className="product-info">
+                <span className="info-label">Categories:</span>{" "}
+                {product.category}
+              </Card.Text>
+            </div>
+            <div className="d-flex justify-content-between align-items-center">
+              <Button variant="outline-danger" className="product-price">
+                ${product.price}
+              </Button>
+              <Button
+                variant="success"
+                className="add-to-cart-button"
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevents the card click event from firing
+                  handleAddToCart(product);
+                }}
+              >
+                Add to Cart
+              </Button>
+            </div>
           </Card.Body>
         </Card>
       ))}
