@@ -21,9 +21,11 @@ import Cartshow from "../component/user/Carthshow";
 import UpdateCategory from "../component/category/updatecategory";
 import Productmodify from "../component/products/Productmodify";
 import Home from "../component/Home";
+import Addtocart from "../component/user/Addtocard";
 const Dashboard = () => {
   const [user, setUser] = useState({});
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     async function getUserInfo() {
@@ -43,6 +45,24 @@ const Dashboard = () => {
     }
     getUserInfo();
   }, []);
+
+  const handleAddToCart = (product) => {
+    setCart((prevCart) => {
+      const productExists = prevCart.find((item) => item._id === product._id);
+      if (productExists) {
+        return prevCart.map((item) =>
+          item._id === product._id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        return [...prevCart, { ...product, quantity: 1 }];
+      }
+    });
+  };
+  const handleRemove = (id) => {
+    setCart((prevCart) => prevCart.filter((item) => item._id !== id));
+  };
 
   const renderSidebarItems = () => {
     return (
@@ -201,8 +221,16 @@ const Dashboard = () => {
             {/* User Routes */}
             {user.role !== "admin" && (
               <>
-                <Route path="userproducts" element={<Cartshow />} />
-                <Route path="cart" element={<h1>Cart</h1>} />
+                <Route
+                  path="userproducts"
+                  element={<Cartshow handleAddToCart={handleAddToCart} />}
+                />
+                <Route
+                  path="cart"
+                  element={
+                    <Addtocart cart={cart} handleRemove={handleRemove} />
+                  }
+                />
                 <Route path="category" element={<h1>Category</h1>} />
               </>
             )}
