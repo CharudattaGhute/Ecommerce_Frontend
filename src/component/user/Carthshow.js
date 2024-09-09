@@ -84,6 +84,7 @@ function Cart({ handleAddToCart }) {
                   : "http://localhost:5001/uploads/default-image.jpg"
               }
               alt={product.productname}
+              className="product-image"
             />
           </div>
           <Card.Body className="custom-card-body">
@@ -95,16 +96,19 @@ function Cart({ handleAddToCart }) {
             </Card.Text>
             <div className="product-details">
               <Card.Text className="product-info">
-                Quantity: {product.quantity}
+                <span className="product-info-label">Quantity:</span>{" "}
+                {product.quantity}
               </Card.Text>
               <Card.Text className="product-info">
-                Availability: {product.availability}
+                <span className="product-info-label">Availability:</span>{" "}
+                {product.availability}
               </Card.Text>
               <Card.Text className="product-info">
-                Categories: {product.category}
+                <span className="product-info-label">Categories:</span>{" "}
+                {product.category}
               </Card.Text>
             </div>
-            <div className="d-flex justify-content-between align-items-center">
+            <div className="d-flex justify-content-between align-items-center mt-auto">
               <Button variant="outline-danger" className="product-price">
                 ${product.price}
               </Button>
