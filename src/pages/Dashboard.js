@@ -22,6 +22,9 @@ import UpdateCategory from "../component/category/updatecategory";
 import Productmodify from "../component/products/Productmodify";
 import Home from "../component/Home";
 import Addtocart from "../component/user/Addtocard";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 const Dashboard = () => {
   const [user, setUser] = useState({});
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -49,6 +52,8 @@ const Dashboard = () => {
   const handleAddToCart = (product) => {
     setCart((prevCart) => {
       const productExists = prevCart.find((item) => item._id === product._id);
+      toast.success(`${product.productname} added to cart successfully!`);
+
       if (productExists) {
         return prevCart.map((item) =>
           item._id === product._id
@@ -62,6 +67,7 @@ const Dashboard = () => {
   };
   const handleRemove = (id) => {
     setCart((prevCart) => prevCart.filter((item) => item._id !== id));
+    toast.success(`Product remove successfully!🛢️`);
   };
 
   const renderSidebarItems = () => {
@@ -238,6 +244,7 @@ const Dashboard = () => {
           </Routes>
         </Col>
       </Row>
+      <ToastContainer />
     </Container>
   );
 };
