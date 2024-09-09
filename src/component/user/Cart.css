@@ -1,78 +1,60 @@
-/* Cart.css */
+.custom-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition for both scaling and shadow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+.custom-card:hover {
+  transform: scale(1.05); /* Slightly increase the size of the card */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 10); /* Darker shadow on hover */
+}
+
+.custom-card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
 .image-container {
-    width: 100%;
-    height: 180px; 
-    overflow: hidden;
-    display: flex;
-    align-items: center; 
-    justify-content: center; 
-  }
-  
-  .image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; 
-  }
-  
-  .custom-card {
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  
-  .custom-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-  
-  .custom-card-body {
-    padding: 15px;
-  }
-  
-  .product-title {
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .product-description {
-    font-size: 0.875rem;
-    color: #555;
-    margin-bottom: 15px;
-  }
-  
-  .product-details {
-    margin-bottom: 15px;
-  }
-  
-  .product-info {
-    font-size: 0.875rem;
-    color: #333;
-  }
-  
-  .info-label {
-    font-weight: bold;
-    color: blue;
-  }
-  
-  .product-price {
-    font-size: 1.125rem;
-    font-weight: bold;
-  }
-  
-  .add-to-cart-button {
-    font-size: 0.875rem;
-    font-weight: bold;
-    margin-left: 10px;
-  }
-  
-  .product-reviews {
-    font-size: 0.875rem;
-  }
-  
-  .review-link {
-    color: blue;
-    cursor: pointer;
-  }
-  
+  overflow: hidden;
+}
+
+.product-image {
+  height: 200px; /* Adjust the height as needed */
+  object-fit: cover;
+}
+
+.product-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.product-description {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.product-details {
+  margin-bottom: 1rem;
+}
+
+.product-info {
+  margin-bottom: 0.5rem;
+}
+
+.product-info-label {
+  color: blue;
+  font-family: unset;
+  font-size: 17px;
+}
+
+.add-to-cart-button {
+  width: 100%;
+  margin-left: 10px; 
+}
+
+.product-price {
+  width: 100%;
+}
